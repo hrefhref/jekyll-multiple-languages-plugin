@@ -344,14 +344,15 @@ module Jekyll
           file =            @file
         end
         site = context.registers[:site] # Jekyll site object
+        file = Liquid::Template.parse(file).render(context)  # Parses and renders some Liquid syntax on arguments (allows expansions)
 
-        if File.exists?(site.config['lang'] + "/" + file)
+        path = File.join(site.source, "_i18n/", site.config['lang'], "/", file)
+        if File.exists?(path)
           lang = site.config['lang']
         else
+          puts "Translation file #{file} does not exists in #{site.config['lang']}"
           lang = "en"
         end
-
-        file = Liquid::Template.parse(file).render(context)  # Parses and renders some Liquid syntax on arguments (allows expansions)
 
         includes_dir = File.join(site.source, '_i18n/' + lang)
 
