@@ -375,7 +375,8 @@ module Jekyll
               contents
             end
           else
-            raise IOError.new "Included file '#{file}' not found in #{includes_dir} directory"
+            puts "Warning: could not include file '#{includes_dir}/#{file}' in any languages"
+            ""
           end
 
         end
